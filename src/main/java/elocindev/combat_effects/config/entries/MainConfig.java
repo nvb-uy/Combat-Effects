@@ -38,8 +38,8 @@ public class MainConfig {
     @Comment(" ")
     public List<DataHolders.EntityHolder> entities = List.of(
         DataHolders.EntityHolder.create("examplemod:example_entity", List.of(
-            DataHolders.EffectHolder.create("minecraft:poison", 100, 0, true),
-            DataHolders.EffectHolder.create("minecraft:wither", 100, 0, true)
+            DataHolders.EffectHolder.create("minecraft:poison", 100, 0, true, true),
+            DataHolders.EffectHolder.create("minecraft:wither", 100, 0, true, true)
         ),
         0, false, false)
     );

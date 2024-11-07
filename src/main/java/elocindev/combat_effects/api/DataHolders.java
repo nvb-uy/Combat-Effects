@@ -4,20 +4,22 @@ import java.util.List;
 
 public class DataHolders {
     public static class EffectHolder {
-        public static EffectHolder create(String effect_id, int duration, int amplifier, boolean show_particles) {
-            return new EffectHolder(effect_id, duration, amplifier, show_particles);
+        public static EffectHolder create(String effect_id, int duration, int amplifier, boolean ambient, boolean show_particles) {
+            return new EffectHolder(effect_id, duration, amplifier, ambient, show_particles);
         }
 
-        private EffectHolder(String effect_id, int duration, int amplifier, boolean show_particles) {
+        private EffectHolder(String effect_id, int duration, int amplifier, boolean ambient, boolean show_particles) {
             this.effect_id = effect_id;
             this.duration = duration;
             this.amplifier = amplifier;
+            this.ambient = ambient;
             this.show_particles = show_particles;
         }
 
         public String effect_id;
         public int duration;
         public int amplifier;
+        public boolean ambient;
         public boolean show_particles;
     }
 
