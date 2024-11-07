@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import elocindev.combat_effects.CombatEffects;
 import elocindev.combat_effects.api.DataHolders;
@@ -28,15 +28,16 @@ import net.minecraft.server.network.ServerPlayerEntity;
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin {
     
-    @Inject(method = "damage", at = @At("HEAD"))
-    public void damage(DamageSource damageSource, float amount, CallbackInfo ci) {
+    @Inject(method = "damage", at = @At("TAIL"))
+    public void damage(DamageSource damageSource, float amount, CallbackInfoReturnable<Boolean> ci) {
         LivingEntity entity = (LivingEntity) (Object) this;
 
         if (damageSource.getAttacker() != null && damageSource.getAttacker() instanceof LivingEntity) {
             LivingEntity attacker = (LivingEntity) damageSource.getAttacker();
+
             if (entity instanceof ServerPlayerEntity) {
                 PlayerEntity player = (PlayerEntity) entity;
-                processEffects(player, attacker, true);
+                processEffects(attacker, player, true);
             } else if (entity instanceof LivingEntity && damageSource.getAttacker() instanceof PlayerEntity) {
                 PlayerEntity player = (PlayerEntity) damageSource.getAttacker();
                 LivingEntity livingEntity = (LivingEntity) entity;
@@ -45,15 +46,15 @@ public class LivingEntityMixin {
         }
     }
 
-    private void processEffects(LivingEntity entity, LivingEntity attacker, boolean isPlayer) {
+    private void processEffects(LivingEntity entity, PlayerEntity player, boolean isPlayerTheVictim) {
         for (DataHolders.EntityHolder entityHolder : MainConfig.INSTANCE.entities) {
             if (checkMatch(entity, entityHolder.entity_regex) && entity.getHealth() >= entityHolder.minimum_hp) {
-                if (isPlayer || !entityHolder.only_on_player_hit) {
-                    if (entityHolder.apply_to_attackers_instead) {
-                        applyEffects(attacker, entityHolder.effects_to_apply);
-                    } else {
-                        applyEffects(entity, entityHolder.effects_to_apply);
-                    }
+                if (!isPlayerTheVictim && entityHolder.only_on_player_hit) return;
+
+                if (entityHolder.apply_to_entity_instead_of_player) {
+                    applyEffects(entity, entityHolder.effects_to_apply);
+                } else {
+                    applyEffects(player, entityHolder.effects_to_apply);
                 }
             }
         }
