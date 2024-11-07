@@ -15,9 +15,11 @@ import elocindev.necronomicon.api.NecUtilsAPI;
 import elocindev.necronomicon.api.ResourceIdentifier;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 @Mixin(LivingEntity.class)
@@ -30,11 +32,11 @@ public class LivingEntityMixin {
         if (damageSource.getAttacker() != null && damageSource.getAttacker() instanceof LivingEntity) {
             LivingEntity attacker = (LivingEntity) damageSource.getAttacker();
             if (entity instanceof ServerPlayerEntity) {
-                ServerPlayerEntity player = (ServerPlayerEntity) entity;
+                PlayerEntity player = (PlayerEntity) entity;
                 processEffects(player, attacker, true);
             } else if (entity instanceof LivingEntity && damageSource.getAttacker() instanceof PlayerEntity) {
-                LivingEntity livingEntity = (LivingEntity) entity;
                 PlayerEntity player = (PlayerEntity) damageSource.getAttacker();
+                LivingEntity livingEntity = (LivingEntity) entity;
                 processEffects(livingEntity, player, false);
             }
         }
@@ -56,7 +58,13 @@ public class LivingEntityMixin {
 
     private void applyEffects(LivingEntity entityToApply, List<DataHolders.EffectHolder> effects) {
         for (DataHolders.EffectHolder effect : effects) {
-            var actualEffect = Registries.STATUS_EFFECT.get(ResourceIdentifier.get(effect.effect_id));
+            
+            //? if >=1.21 {
+            /*RegistryEntry<StatusEffect> actualEffect = RegistryEntry.of(Registries.STATUS_EFFECT.get(ResourceIdentifier.get(effect.effect_id)));
+            *///?} else {
+            StatusEffect actualEffect = Registries.STATUS_EFFECT.get(ResourceIdentifier.get(effect.effect_id));
+            //?}
+
             if (actualEffect == null) {
                 CombatEffects.LOGGER.error("Effect with id {} not found!", effect.effect_id);
                 continue;
