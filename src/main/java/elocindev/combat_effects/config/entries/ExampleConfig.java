@@ -1,6 +1,6 @@
-package elocindev.examplemod.config.entries;
+package elocindev.combat_effects.config.entries;
 
-import elocindev.examplemod.ExampleMod;
+import elocindev.combat_effects.CombatEffects;
 import elocindev.necronomicon.api.config.v1.NecConfigAPI;
 import elocindev.necronomicon.config.NecConfig;
 
@@ -9,7 +9,7 @@ public class ExampleConfig {
 
 
     public static String getFile() {
-        return NecConfigAPI.getFile(ExampleMod.MODID+".json5");
+        return NecConfigAPI.getFile(CombatEffects.MODID+".json5");
     }
 
     public String myString = "example";

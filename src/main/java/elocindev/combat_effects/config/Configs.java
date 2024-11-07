@@ -1,6 +1,6 @@
-package elocindev.examplemod.config;
+package elocindev.combat_effects.config;
 
-import elocindev.examplemod.config.entries.ExampleConfig;
+import elocindev.combat_effects.config.entries.ExampleConfig;
 import elocindev.necronomicon.api.config.v1.NecConfigAPI;
 
 public class Configs {

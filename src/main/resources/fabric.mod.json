@@ -8,8 +8,8 @@
 		"${author}"
 	],
 	"contact": {
-		"sources": "https://github.com/${github}/${name}",
-		"issues": "https://github.com/${github}/${name}/issues"
+		"sources": "https://github.com/${github}/Combat-Effects",
+		"issues": "https://github.com/${github}/Combat-Effects/issues"
 	},
 	"license": "${license}",
 	"icon": "assets/${id}/logo.png",

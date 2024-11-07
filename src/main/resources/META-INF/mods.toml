@@ -3,7 +3,7 @@ loaderVersion="[1,)"
 license="${license}"
 showAsResourcePack=false
 
-issueTrackerURL = "https://github.com/${github}/${name}/issues"
+issueTrackerURL = "https://github.com/${github}/Combat-Effects/issues"
 
 [[mods]]
 modId="${id}"
@@ -12,7 +12,7 @@ displayName="${display_name}"
 authors="${author}"
 description="${description}"
 logoFile="assets/${namespace}/logo.png"
-displayURL = "https://github.com/${github}/${name}/"
+displayURL = "https://github.com/${github}/Combat-Effects"
 
 [[mixins]]
 config = "${id}.mixins.json"

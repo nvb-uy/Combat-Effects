@@ -1,4 +1,4 @@
 {
-  "example_mod.configuration.client": "client",
-  "example_mod.configuration.example": "example"
+  "combat_effects.configuration.client": "client",
+  "combat_effects.configuration.example": "example"
 }
